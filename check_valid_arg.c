@@ -1,18 +1,47 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_valid_arg.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bbayard <bbayard@student.21-school.ru>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/11 21:48:30 by bbayard           #+#    #+#             */
+/*   Updated: 2021/12/15 23:37:18 by bbayard          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-void	cleaning_b(t_stacks *valid_num, int i)
+int	cleaning_b(t_stacks *valid_num, int i)
 {
-	while (i >= 0)
-		free(valid_num->b[i--]);
+	int	c;
+
+	c = 0;
+	while (i > c)
+	{
+		free(valid_num->b[c]);
+		c++;
+	}
+	free(valid_num->b);
+	return (cleaning(valid_num, i));
+}
+
+int	cleaning(t_stacks *valid_num, int i)
+{
+	while (--i >= 0)
+		free(valid_num->a[i]);
+	free(valid_num->a);
 	free(valid_num);
+	return (0);
 }
 
 int	create_stack_b(t_stacks *valid_num, int length)
 {
 	int	i;
+
 	i = 0;
-	valid_num->b = malloc(sizeof(char **) * length);
-	if (!valid_num)
+	valid_num->b = malloc(sizeof(char **) * length + 1);
+	if (!valid_num->b)
 	{
 		free(valid_num);
 		return (0);
@@ -22,79 +51,59 @@ int	create_stack_b(t_stacks *valid_num, int length)
 		valid_num->b[i] = malloc(sizeof(t_stack));
 		if (!valid_num->b[i])
 		{
-			cleaning_b(valid_num, i);
+			cleaning_b(valid_num, length);
 			return (0);
 		}
+		valid_num->b[i]->sort_numb = 0;
 		i++;
-	}	
+	}
 	return (1);
 }
 
-void	cleaning(t_stacks *valid_num, int i)
+int	stack_record_num(char **str, t_stacks *valid_num, int start, int length)
 {
-	while (i >= 0)
-		free(valid_num->a[i--]);
-	free(valid_num);
-}
+	int	i;
 
-void	stack_record_num(char **str, t_stacks *valid_num, int start, int length)
-{
-	int i;
 	i = 0;
-	valid_num->a = malloc(sizeof(char **) * length);	
-	if (!valid_num)
-	{
-		free(valid_num);
-		return ;
-	}
-	valid_num->num_space = length - start;	
-write(1, "==Pizde==\n", 10);	
-	while (length-- > start)
-	{
-write(1, "Pizde\n", 6);		
+	valid_num->a = malloc(sizeof(char **) * length + 1);
+	if (!valid_num->a)
+		return (cleaning(valid_num, i));
+	while (length - start >= i)
+	{	
 		valid_num->a[i] = malloc(sizeof(t_stack));
-		if(!valid_num->a[i])
-		{
-			cleaning(valid_num, i);
-			return ;
-		}
-write(1, "Pizde\n", 6);				
-		valid_num->a[i]->data = ft_atoi(str[length]);	
-		if (!valid_num->a[i]->data)
-			cleaning(valid_num, i);
+		if (!valid_num->a[i])
+			return (cleaning(valid_num, i));
+		valid_num->a[i]->data = ft_atoi(str[i + 1]);
+		valid_num->a[i]->sort_numb = 0;
 		i++;
 	}
-write(1, "12Pizde12\n", 10);	
 	if (!create_stack_b(valid_num, length))
-		cleaning(valid_num, start);
-write(1, "==Pizde==\n", 10);
+		return (cleaning(valid_num, i));
+	return (i);
 }
 
 int	check_valid_arg(int argc, char **argv, t_stacks *valid_num)
-{
-	int		i;
+{	
 	char	**str;
+	int		step_argc;
 
+	step_argc = 0;
 	str = NULL;
-	i = 0;
 	if (argc < 2)
-		return (ft_error());
+		return (ft_error(1));
 	else if (argc == 2)
 	{
 		str = ft_split(argv[1], ' ');
 		if (!str)
 			return (0);
-		stack_record_num(str, valid_num, 0, ft_strlen(*str));
+		if (!ft_strrchr(str, ft_strlen_2(str), 0, step_argc))
+			return (0);
+		return (stack_record_num(str, valid_num, 0, ft_strlen(*str)));
 	}
-	else 
-	{			
-		while (++i < argc)
-		{
-			if (ft_strrchr(*argv, *argv[i], i))
-				return (ft_error());
-		}
-write(1, "1_Pizde\n", 8);
-		stack_record_num(str, valid_num, 1, argc - 1);
-	}	
-	return (1);
+	else
+	{
+		if (!ft_strrchr(argv, --argc, 1, step_argc))
+			return (0);
+		return (stack_record_num(argv, valid_num, 1, argc));
+	}
 }
