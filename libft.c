@@ -22,9 +22,9 @@ int	ft_atoi(char *str)
 	num = 0;
 	i = 0;
 	if (!str[i])
-		return (0);
+		ft_error();
 	if ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
-		return (ft_error(1));
+		ft_error();
 	if (str[i] == '-')
 	{
 		sign = -1;
@@ -34,17 +34,19 @@ int	ft_atoi(char *str)
 	{
 		num = (num * 10) + (str[i++] - '0') * sign;
 		if ((sign > 0 && num < 0) || (sign < 0 && num > 0))
-			return (ft_error(1));
+			ft_error();
 	}
+
 	if (str[i])
-		return (ft_error(1));
+		ft_error();
 	return (num);
 }
 
-int	ft_error(int i)
+void	ft_error()
 {
-	write (i, "Error\n", 6);
-	return (0);
+		write (1, "Error\n", 6);
+		exit(1);
+
 }
 
 int	ft_strlen(char *s)
@@ -74,23 +76,23 @@ int	ft_strrchr(char **s, int argc, int start, int step_argc)
 
 	if (argc <= 0)
 	{
-		if (!ft_atoi(s[argc]))
-			return (0);
+		// if (ft_atoi(s[argc]) == -13841)
+		// 	return (0);
 		return (1);
 	}
 	while (0 < argc)
 	{	
 		c2 = ft_atoi(s[argc]);
-		if (!c2)
-			return (0);
+		// if (c2 == -13841)
+		// 	return (0);
 		step_argc = argc--;
 		while (--step_argc >= start)
 		{
 			c1 = ft_atoi(s[step_argc]);
-			if (!c1)
-				return (0);
+			// if (c1 == -13841)
+			// 	return (0);
 			if (c1 - c2 == 0)
-				return (ft_error(1));
+				ft_error();
 		}
 	}
 	return (1);

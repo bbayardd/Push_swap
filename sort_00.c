@@ -91,6 +91,8 @@ void	sort_f_elem(t_stacks *valid_num)
 	pa(valid_num);
 	if (valid_num->a[0]->data == max)
 		ra(valid_num);
+	else if (valid_num->a[1]->data < valid_num->a[2]->data)
+		return ;
 	else
 	{
 		sa(valid_num);

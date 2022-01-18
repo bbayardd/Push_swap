@@ -69,11 +69,11 @@ int	stack_record_num(char **str, t_stacks *valid_num, int start, int length)
 	if (!valid_num->a)
 		return (cleaning(valid_num, i));
 	while (length - start >= i)
-	{	
+	{
 		valid_num->a[i] = malloc(sizeof(t_stack));
 		if (!valid_num->a[i])
 			return (cleaning(valid_num, i));
-		valid_num->a[i]->data = ft_atoi(str[i + 1]);
+		valid_num->a[i]->data = ft_atoi(str[i + start]);
 		valid_num->a[i]->sort_numb = 0;
 		i++;
 	}
@@ -90,7 +90,7 @@ int	check_valid_arg(int argc, char **argv, t_stacks *valid_num)
 	step_argc = 0;
 	str = NULL;
 	if (argc < 2)
-		return (ft_error(1));
+		return (0);
 	else if (argc == 2)
 	{
 		str = ft_split(argv[1], ' ');
@@ -98,7 +98,7 @@ int	check_valid_arg(int argc, char **argv, t_stacks *valid_num)
 			return (0);
 		if (!ft_strrchr(str, ft_strlen_2(str), 0, step_argc))
 			return (0);
-		return (stack_record_num(str, valid_num, 0, ft_strlen(*str)));
+		return (stack_record_num(str, valid_num, 0, ft_strlen_2(str)));
 	}
 	else
 	{

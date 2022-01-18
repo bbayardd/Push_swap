@@ -19,7 +19,7 @@ void	rb(t_stacks *valid_num)
 
 	i = 0;
 	t = valid_num->b[i];
-	while (valid_num->num_of_b - 1 > i)
+	while (valid_num->num_of_b > i + 1)
 	{
 		valid_num->b[i] = valid_num->b[i + 1];
 		i++;

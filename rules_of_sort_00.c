@@ -38,7 +38,7 @@ void	pa(t_stacks *valid_num)
 	t_stack	*tmp;
 
 	i = 0;
-	if (!valid_num->b[0])
+	if (valid_num->num_of_b == 0)
 		return ;
 	i = valid_num->num_of_a;
 	tmp = valid_num->a[i];
@@ -49,10 +49,11 @@ void	pa(t_stacks *valid_num)
 	}	
 	valid_num->a[0] = valid_num->b[0];
 	i = 0;
-	if (valid_num->num_of_b == 1)
-		valid_num->b[i] = 0;
-	while (valid_num->num_of_b > ++i)
-			valid_num->b[i - 1] = valid_num->b[i];
+	while (valid_num->num_of_b > i + 1)
+	{	
+			valid_num->b[i] = valid_num->b[i + 1];
+			i++;
+	}
 	valid_num->b[i] = tmp;
 	valid_num->num_of_b--;
 	valid_num->num_of_a++;
@@ -65,7 +66,7 @@ void	pb(t_stacks *valid_num)
 	t_stack	*tmp;
 
 	i = 0;
-	if (!valid_num->a[0])
+	if (valid_num->num_of_a == 0)
 		return ;
 	i = valid_num->num_of_b;
 	tmp = valid_num->b[i];
@@ -76,10 +77,11 @@ void	pb(t_stacks *valid_num)
 	}	
 	valid_num->b[0] = valid_num->a[0];
 	i = 0;
-	if (valid_num->num_of_a == 1)
-		valid_num->a[i] = 0;
-	while (valid_num->num_of_a > ++i)
-			valid_num->a[i - 1] = valid_num->a[i];
+	while (valid_num->num_of_a > i + 1)
+	{	
+			valid_num->a[i] = valid_num->a[i + 1];
+			i++;
+	}
 	valid_num->a[i] = tmp;
 	valid_num->num_of_a--;
 	valid_num->num_of_b++;
@@ -93,7 +95,7 @@ void	ra(t_stacks *valid_num)
 
 	i = 0;
 	t = valid_num->a[i];
-	while (valid_num->num_of_a - 1 > i)
+	while (valid_num->num_of_a > i + 1)
 	{
 		valid_num->a[i] = valid_num->a[i + 1];
 		i++;

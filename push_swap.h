@@ -45,7 +45,7 @@ int		main(int argc, char **argv);
 int		sortet(t_stacks *v_n, int num_of_elem);
 int		check_valid_arg(int argc, char **argv, t_stacks *valid_num);
 int		ft_atoi(char *str);
-int		ft_error(int i);
+void	ft_error();
 int		ft_strlen(char *s);
 int		ft_strlen_2(char **s);
 int		ft_strrchr(char **s, int argc, int start, int step_argc);
