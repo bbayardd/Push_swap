@@ -12,6 +12,12 @@
 
 #include "push_swap.h"
 
+int	free_staks(t_stacks *valid_num)
+{
+	free(valid_num);
+	return (0);
+}
+
 int	sortet(t_stacks *v_n, int num_of_elem)
 {
 	int	i;
@@ -74,12 +80,14 @@ int	main(int argc, char **argv)
 	int			num_of_element;
 
 	valid_num = malloc(sizeof(t_stacks));
+	if (!valid_num)
+		return (0);
 	valid_num->num_of_b = 0;
 	num_of_element = check_valid_arg(argc, argv, valid_num);
-	valid_num->num_of_a = num_of_element;
 	if (!num_of_element)
 		return (0);
-	else if (sortet(valid_num, num_of_element) || (num_of_element == 1))
+	valid_num->num_of_a = num_of_element;
+	if (sortet(valid_num, num_of_element) || (num_of_element == 1))
 		return (cleaning_b(valid_num, num_of_element));
 	else if (num_of_element == 2)
 		sort_two_elem(valid_num);

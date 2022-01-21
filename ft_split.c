@@ -56,7 +56,7 @@ char	**ft_split(char *s, char c)
 	i = 0;
 	l = 0;
 	arr_s = (char **)malloc(sizeof(char *) * (num_space(s, c) + 1));
-	if (!s || !arr_s)
+	if (!s || !arr_s || num_space(s, c) == 0)
 		return (NULL);
 	idx = -1;
 	while (i <= ft_strlen(s))

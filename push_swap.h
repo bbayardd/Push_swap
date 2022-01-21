@@ -44,8 +44,8 @@ typedef struct s_list
 int		main(int argc, char **argv);
 int		sortet(t_stacks *v_n, int num_of_elem);
 int		check_valid_arg(int argc, char **argv, t_stacks *valid_num);
-int		ft_atoi(char *str);
-void	ft_error();
+long	ft_atoi(char *str);
+long	ft_error(int i);
 int		ft_strlen(char *s);
 int		ft_strlen_2(char **s);
 int		ft_strrchr(char **s, int argc, int start, int step_argc);
@@ -89,5 +89,6 @@ void	push_w_4(t_stacks *v_n, int r);
 void	push_to_b(t_stacks *v_n, int r);
 int		sum_step(int a, int b, int i);
 int		find_place_b(t_stacks *v_n, int s_n, int min, int max);
+int		free_staks(t_stacks *valid_num);
 
 #endif

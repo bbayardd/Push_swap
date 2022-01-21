@@ -90,20 +90,20 @@ int	check_valid_arg(int argc, char **argv, t_stacks *valid_num)
 	step_argc = 0;
 	str = NULL;
 	if (argc < 2)
-		return (0);
+		return (free_staks(valid_num));
 	else if (argc == 2)
 	{
 		str = ft_split(argv[1], ' ');
 		if (!str)
-			return (0);
+			return (free_staks(valid_num));
 		if (!ft_strrchr(str, ft_strlen_2(str), 0, step_argc))
-			return (0);
+			return (free_staks(valid_num));
 		return (stack_record_num(str, valid_num, 0, ft_strlen_2(str)));
 	}
 	else
 	{
 		if (!ft_strrchr(argv, --argc, 1, step_argc))
-			return (0);
+			return (free_staks(valid_num));
 		return (stack_record_num(argv, valid_num, 1, argc));
 	}
 }

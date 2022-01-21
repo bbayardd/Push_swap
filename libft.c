@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int	ft_atoi(char *str)
+long	ft_atoi(char *str)
 {
 	int		sign;
 	int		num;
@@ -22,9 +22,9 @@ int	ft_atoi(char *str)
 	num = 0;
 	i = 0;
 	if (!str[i])
-		ft_error();
+		return (2147483648);
 	if ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
-		ft_error();
+		return (ft_error(1));
 	if (str[i] == '-')
 	{
 		sign = -1;
@@ -34,19 +34,25 @@ int	ft_atoi(char *str)
 	{
 		num = (num * 10) + (str[i++] - '0') * sign;
 		if ((sign > 0 && num < 0) || (sign < 0 && num > 0))
-			ft_error();
+			return (ft_error(1));
 	}
-
 	if (str[i])
-		ft_error();
+		return (ft_error(1));
 	return (num);
 }
 
-void	ft_error()
+long	ft_error(int i)
 {
+	if (i == 1)
+	{
+		write (i, "Error\n", 6);
+		return (2147483648);
+	}
+	else
+	{
 		write (1, "Error\n", 6);
-		exit(1);
-
+		return (0);
+	}
 }
 
 int	ft_strlen(char *s)
@@ -71,28 +77,28 @@ int	ft_strlen_2(char **s)
 
 int	ft_strrchr(char **s, int argc, int start, int step_argc)
 {
-	int	c1;
-	int	c2;
+	long	c1;
+	long	c2;
 
 	if (argc <= 0)
 	{
-		// if (ft_atoi(s[argc]) == -13841)
-		// 	return (0);
+		if (ft_atoi(s[argc]) == 2147483648)
+			return (0);
 		return (1);
 	}
 	while (0 < argc)
 	{	
 		c2 = ft_atoi(s[argc]);
-		// if (c2 == -13841)
-		// 	return (0);
+		if (c2 == 2147483648)
+			return (0);
 		step_argc = argc--;
 		while (--step_argc >= start)
 		{
 			c1 = ft_atoi(s[step_argc]);
-			// if (c1 == -13841)
-			// 	return (0);
+			if (c1 == 2147483648)
+				return (0);
 			if (c1 - c2 == 0)
-				ft_error();
+				return (ft_error(0));
 		}
 	}
 	return (1);
